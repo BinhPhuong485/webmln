@@ -1,0 +1,4 @@
+import { useLayoutEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+import StrokeText from './StrokeText';
+export function HeroStrokeText(){const [target,setTarget]=useState<HTMLElement | null>(null);useLayoutEffect(()=>{const heading=document.querySelector<HTMLElement>('.hero h1');if(!heading)return;heading.replaceChildren();heading.style.visibility='visible';heading.style.opacity='1';heading.style.maxWidth='min(100%, 840px)';heading.style.marginTop='1.1rem';heading.style.marginBottom='0';setTarget(heading)},[]);return target?createPortal(<StrokeText text="Khi tư duy gặp đời sống." strokeColor="#ec6a31" fillColor="#192532" strokeWidth={1.6} drawDuration={1.8} fillDelay={0.15} stagger={0.04} ease="power2.out" trigger="mount" fillMode="wipe" fontSize={112} fontWeight={700} letterSpacing={-1} style={{maxWidth:'840px'}}/>,target):null}
