@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, extend, useFrame } from '@react-three/fiber';
 import { Environment, Lightformer, useGLTF, useTexture } from '@react-three/drei';
 import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphericalJoint } from '@react-three/rapier';
@@ -24,10 +24,21 @@ export interface LanyardProps {
 }
 
 export default function Lanyard({ position = [0, 0, 20], gravity = [0, -40, 0], fov = 20, transparent = true, onYank, yankThreshold = 3.5 }: LanyardProps) {
-  return <div className="lanyard-wrapper"><Canvas camera={{ position, fov }} dpr={[1, 1.25]} gl={{ alpha: transparent }}><ambientLight intensity={Math.PI} /><Physics gravity={gravity}><Band onYank={onYank} threshold={yankThreshold} /></Physics><Environment><Lightformer intensity={5} position={[2, 4, 6]} scale={[20, 0.1, 1]} /></Environment></Canvas></div>;
+  const wrapper = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(true);
+
+  useEffect(() => {
+    const node = wrapper.current;
+    if (!node || !('IntersectionObserver' in window)) return undefined;
+    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0 });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  return <div className="lanyard-wrapper" ref={wrapper}><Canvas camera={{ position, fov }} dpr={[1, 1.5]} frameloop={inView ? 'always' : 'never'} gl={{ alpha: transparent, antialias: true }}><ambientLight intensity={Math.PI} /><Physics gravity={gravity}><Band onYank={onYank} threshold={yankThreshold} /></Physics><Environment><Lightformer intensity={5} position={[2, 4, 6]} scale={[20, 0.1, 1]} /></Environment></Canvas></div>;
 }
 
-function Band({ onYank, threshold }) {
+function Band({ onYank, threshold }: { onYank?: () => void; threshold: number }) {
   const fixed = useRef(), a = useRef(), b = useRef(), c = useRef(), card = useRef(), line = useRef(), off = useRef(new THREE.Vector3()), pull = useRef(0);
   const vec = new THREE.Vector3(), dir = new THREE.Vector3(), goal = new THREE.Vector3(), rest = new THREE.Vector3(2, 4, 0);
   const curve = useRef(new THREE.CatmullRomCurve3([new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()]));
@@ -106,6 +117,7 @@ function Band({ onYank, threshold }) {
   }, [materials.base.map]);
 
   const p = { type: 'dynamic', colliders: false, angularDamping: 4, linearDamping: 4 };
+
   useRopeJoint(fixed, a, [[0, 0, 0], [0, 0, 0], 1]); useRopeJoint(a, b, [[0, 0, 0], [0, 0, 0], 1]); useRopeJoint(b, c, [[0, 0, 0], [0, 0, 0], 1]); useSphericalJoint(c, card, [[0, 0, 0], [0, 1.5, 0]]);
   useFrame((s) => { if (drag) { vec.set(s.pointer.x, s.pointer.y, 0.5).unproject(s.camera); dir.copy(vec).sub(s.camera.position).normalize(); goal.copy(vec).add(dir.multiplyScalar(s.camera.position.length())).sub(off.current); pull.current = Math.max(pull.current, goal.distanceTo(rest)); card.current.setNextKinematicTranslation(goal); } if (line.current) { curve.current.points[0].copy(c.current.translation()); curve.current.points[1].copy(b.current.translation()); curve.current.points[2].copy(a.current.translation()); curve.current.points[3].copy(fixed.current.translation()); line.current.geometry.setPoints(curve.current.getPoints(20)); } });
   const down = (event) => { event.target.setPointerCapture(event.pointerId); off.current.copy(event.point).sub(card.current.translation()); pull.current = 0; setDrag(true); };

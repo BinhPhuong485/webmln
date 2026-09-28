@@ -19,7 +19,7 @@ const experiences = [
 ];
 
 function Heading({ number, label, children }: { number: string; label: string; children: ReactNode }) {
-  return <>{number === '01' && <YankLanyard />}<header className="section-heading"><span>{number}</span><div><p className="eyebrow">{label}</p><h2>{children}</h2></div></header></>;
+  return <header className="section-heading"><span>{number}</span><div><p className="eyebrow">{label}</p><h2>{children}</h2></div></header>;
 }
 
 export function ExplainerPage() {
@@ -39,7 +39,7 @@ export function ExplainerPage() {
 
   return <main className="site" ref={root}>
     <div className="reading"><span ref={bar} /></div>
-    <nav className="topnav"><Link to="/">FPT<span>•</span>PHIL</Link><Link to="/game">Chơi game ↗</Link></nav>
+    <nav className="topnav"><Link to="/">FPT<span>•</span>PHIL</Link><Link className="hero-game-link" to="/game">Chơi game ↗</Link><YankLanyard /></nav>
     <section className="hero"><p className="eyebrow hero-reveal">Triết học Mác – Lênin · Đại học FPT</p><h1 className="hero-reveal">Khi tư duy<br />gặp <mark>đời sống.</mark></h1><div className="hero-bottom hero-reveal"><p>Sự thống nhất giữa lý luận và thực tiễn là nguyên tắc phương pháp luận — và cách người học biến hiểu biết thành năng lực thật.</p><a className="round-btn" href="#concepts">↓</a></div></section>
     <section className="section definitions" id="concepts"><Heading number="01" label="Hai điểm xuất phát">Hiểu đúng hai vế<br />của một nguyên tắc.</Heading><div className="definition-pair"><article className="definition-theory"><b>A</b><p className="eyebrow">Lý luận là gì?</p><h3>Hệ thống tri thức được khái quát từ thực tiễn.</h3><p>Phản ánh các mối liên hệ bản chất, quy luật của sự vật; giúp con người nhận thức và hành động có định hướng.</p></article><i className="definition-link">↔</i><article className="definition-practice"><b>B</b><p className="eyebrow">Thực tiễn là gì?</p><h3>Toàn bộ hoạt động vật chất có mục đích, mang tính lịch sử – xã hội của con người nhằm cải biến tự nhiên và xã hội.</h3><p>Gồm ba hình thức cơ bản: hoạt động sản xuất vật chất, hoạt động chính trị – xã hội và hoạt động thực nghiệm khoa học.</p></article></div></section>
     <section className="section practice-section"><div><Heading number="02" label="Từ đời sống đến tư duy">Thực tiễn<br />không đứng sau lý luận.</Heading><p className="section-lead">Thực tiễn là nơi lý luận bắt đầu, được thúc đẩy, hướng tới và kiểm nghiệm.</p></div><div className="role-orbit">{roles.map(([title, text], index) => <article className="role-card" key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div></section>
