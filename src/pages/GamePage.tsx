@@ -10,7 +10,7 @@ gsap.registerPlugin(useGSAP);
 export function GamePage() {
   const rootRef = useRef<HTMLElement>(null);
 
-  useGSAP(() => {
+  useGSAP((_, contextSafe) => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const timeline = gsap.timeline({ defaults: { ease: motion.easing.standard } });
@@ -25,6 +25,36 @@ export function GamePage() {
         duration: motion.duration.base,
         stagger: 0.1,
       }, '-=0.08');
+
+    if (!window.matchMedia('(hover: hover)').matches) return;
+
+    const cards = gsap.utils.toArray<HTMLElement>('.game-choice-card');
+    const liftCard = contextSafe!((event: PointerEvent) => {
+      gsap.to(event.currentTarget, {
+        y: -3,
+        duration: motion.duration.instant,
+        ease: motion.easing.standard,
+        overwrite: 'auto',
+      });
+    });
+    const resetCard = contextSafe!((event: PointerEvent) => {
+      gsap.to(event.currentTarget, {
+        y: 0,
+        duration: motion.duration.instant,
+        ease: motion.easing.standard,
+        overwrite: 'auto',
+      });
+    });
+
+    cards.forEach((card) => {
+      card.addEventListener('pointerenter', liftCard);
+      card.addEventListener('pointerleave', resetCard);
+    });
+
+    return () => cards.forEach((card) => {
+      card.removeEventListener('pointerenter', liftCard);
+      card.removeEventListener('pointerleave', resetCard);
+    });
   }, { scope: rootRef });
 
   return (
