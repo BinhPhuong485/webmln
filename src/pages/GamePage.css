@@ -1,0 +1,4 @@
+.memory-card .card-face {
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+}
