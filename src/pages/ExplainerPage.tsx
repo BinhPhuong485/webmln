@@ -28,13 +28,14 @@ export function ExplainerPage() {
   useHeroEntrance(root); useProgressScroll(root, bar); useSectionNumberParallax(root); useSection01Scroll(root); useSection02Scroll(root); useSection03Scroll(root); useSection04Scroll(root); useSection05Scroll(root); useSection06Scroll(root);
 
   useEffect(() => {
-    const refresh = () => window.requestAnimationFrame(() => ScrollTrigger.refresh());
+    let refreshTimer: number | null = null;
+    const refresh = () => { if (refreshTimer) window.clearTimeout(refreshTimer); refreshTimer = window.setTimeout(() => ScrollTrigger.refresh(), 140); };
     const observer = root.current ? new ResizeObserver(refresh) : null;
     if (root.current) observer?.observe(root.current);
     document.fonts?.ready.then(refresh).catch(refresh);
-    window.addEventListener('load', refresh, { once: true });
+    window.addEventListener('load', refresh, { once: true }); window.addEventListener('orientationchange', refresh);
     refresh();
-    return () => { observer?.disconnect(); window.removeEventListener('load', refresh); };
+    return () => { if (refreshTimer) window.clearTimeout(refreshTimer); observer?.disconnect(); window.removeEventListener('load', refresh); window.removeEventListener('orientationchange', refresh); };
   }, []);
 
   return <main className="site" ref={root}>

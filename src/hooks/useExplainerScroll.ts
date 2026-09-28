@@ -8,6 +8,7 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 type RootRef = RefObject<HTMLElement | null>;
 const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const compactViewport = () => window.matchMedia('(max-width: 767px)').matches;
 
 export function useHeroEntrance(root: RootRef) {
   useGSAP(() => { if (!prefersReducedMotion()) gsap.timeline().from(gsap.utils.selector(root)<HTMLElement>('.hero-reveal'), { autoAlpha: 0, y: 28, duration: motion.duration.slow, ease: motion.easing.enter, stagger: 0.08 }); }, { scope: root });
@@ -19,7 +20,7 @@ export function useProgressScroll(root: RootRef, bar: RefObject<HTMLSpanElement 
 
 export function useSectionNumberParallax(root: RootRef) {
   useGSAP(() => {
-    if (prefersReducedMotion()) return;
+    if (prefersReducedMotion() || compactViewport()) return;
     gsap.utils.selector(root)<HTMLElement>('.section-heading > span').forEach((number) => gsap.to(number, { yPercent: -18, ease: 'none', scrollTrigger: { trigger: number.closest('.section'), start: 'top bottom', end: 'bottom top', scrub: 0.3 } }));
   }, { scope: root });
 }
@@ -29,6 +30,7 @@ export function useSection01Scroll(root: RootRef) {
     if (prefersReducedMotion()) return;
     const query = gsap.utils.selector(root); const theory = query<HTMLElement>('.definition-theory')[0]; const practice = query<HTMLElement>('.definition-practice')[0]; const link = query<HTMLElement>('.definition-link')[0];
     if (!theory || !practice || !link) return;
+    if (compactViewport()) { gsap.from([theory, practice], { autoAlpha: 0, y: 18, duration: motion.duration.base, stagger: 0.12, ease: motion.easing.standard, scrollTrigger: { trigger: theory.parentElement, start: 'top 82%', once: true } }); return; }
     gsap.fromTo(theory, { autoAlpha: 0, xPercent: -9 }, { autoAlpha: 1, xPercent: 0, ease: motion.easing.standard, scrollTrigger: { trigger: theory, start: 'top 84%', end: 'top 48%', scrub: 0.25 } });
     gsap.fromTo(practice, { autoAlpha: 0, xPercent: 9 }, { autoAlpha: 1, xPercent: 0, ease: motion.easing.standard, scrollTrigger: { trigger: practice, start: 'top 84%', end: 'top 48%', scrub: 0.25 } });
     gsap.fromTo(link, { autoAlpha: 0, rotate: -50, scale: 0.6 }, { autoAlpha: 1, rotate: 0, scale: 1, duration: motion.duration.base, ease: motion.easing.enter, scrollTrigger: { trigger: link, start: 'top 75%', once: true } });

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, extend, useFrame } from '@react-three/fiber';
 import { Environment, Lightformer, useGLTF, useTexture } from '@react-three/drei';
 import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphericalJoint } from '@react-three/rapier';
@@ -24,7 +24,17 @@ export interface LanyardProps {
 }
 
 export default function Lanyard({ position = [0, 0, 20], gravity = [0, -40, 0], fov = 20, transparent = true, onYank, yankThreshold = 3.5 }: LanyardProps) {
-  return <div className="lanyard-wrapper"><Canvas camera={{ position, fov }} dpr={[1, 1.25]} gl={{ alpha: transparent }}><ambientLight intensity={Math.PI} /><Physics gravity={gravity}><Band onYank={onYank} threshold={yankThreshold} /></Physics><Environment><Lightformer intensity={5} position={[2, 4, 6]} scale={[20, 0.1, 1]} /></Environment></Canvas></div>;
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const [renderable, setRenderable] = useState(true);
+  useEffect(() => {
+    const node = wrapperRef.current;
+    if (!node) return undefined;
+    const updateVisibility = () => setRenderable(!document.hidden);
+    const observer = new IntersectionObserver(([entry]) => setRenderable(entry.isIntersecting && !document.hidden), { threshold: 0 });
+    observer.observe(node); document.addEventListener('visibilitychange', updateVisibility);
+    return () => { observer.disconnect(); document.removeEventListener('visibilitychange', updateVisibility); };
+  }, []);
+  return <div className="lanyard-wrapper" ref={wrapperRef}><Canvas camera={{ position, fov }} dpr={[1, 1.25]} frameloop={renderable ? 'always' : 'never'} gl={{ alpha: transparent }}><ambientLight intensity={Math.PI} /><Physics gravity={gravity}><Band onYank={onYank} threshold={yankThreshold} /></Physics><Environment><Lightformer intensity={5} position={[2, 4, 6]} scale={[20, 0.1, 1]} /></Environment></Canvas></div>;
 }
 
 function Band({ onYank, threshold }) {

@@ -89,6 +89,7 @@ export function WireGamePage() {
 
   useEffect(() => {
     if (!drag) return;
+    const stopTouchScroll = (event: TouchEvent) => event.preventDefault();
     const move = (event: PointerEvent) => {
       const board = boardRef.current;
       if (!board) return;
@@ -104,9 +105,10 @@ export function WireGamePage() {
       }
       setDrag(null);
     };
+    document.addEventListener('touchmove', stopTouchScroll, { passive: false });
     window.addEventListener('pointermove', move);
     window.addEventListener('pointerup', end, { once: true });
-    return () => { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', end); };
+    return () => { document.removeEventListener('touchmove', stopTouchScroll); window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', end); };
   }, [drag]);
 
   const onLeftPointerDown = (event: ReactPointerEvent<HTMLButtonElement>, pairId: string) => {

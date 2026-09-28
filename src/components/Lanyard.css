@@ -13,5 +13,9 @@
 }
 
 @media (max-width: 768px) {
-  .lanyard-wrapper { width: 250px; height: 360px; opacity: .9; }
+  .lanyard-wrapper { display:none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lanyard-wrapper { display:none; }
 }
