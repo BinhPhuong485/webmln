@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { motion } from '../motionTokens';
 import { pairs } from '../data/pairs';
+import { markGameDone } from '../utils/progress';
+import { shouldShowCongratsAfterCompletion, syncCongratsCycle } from '../utils/congrats';
+import { CongratsModal } from '../components/CongratsModal';
 import './WireGamePage.css';
 
 type Point = { x: number; y: number };
@@ -18,6 +21,8 @@ const cablePath = (from: Point, to: Point) => {
 };
 
 export function WireGamePage() {
+  const completionRecorded = useRef(false);
+  const [showCongrats, setShowCongrats] = useState(false);
   const rootRef = useRef<HTMLElement | null>(null);
   const boardRef = useRef<HTMLDivElement | null>(null);
   const leftSockets = useRef(new Map<string, HTMLSpanElement>());
@@ -78,6 +83,9 @@ export function WireGamePage() {
     return () => window.clearInterval(timer);
   }, [started, done]);
 
+  useEffect(() => { syncCongratsCycle(); }, []);
+  useEffect(() => { if (!done || completionRecorded.current) return; completionRecorded.current = true; if (shouldShowCongratsAfterCompletion(markGameDone('noi-day'))) setShowCongrats(true); }, [done]);
+
   useLayoutEffect(() => {
     const updateLayout = () => setLayoutVersion((value) => value + 1);
     const frame = window.requestAnimationFrame(updateLayout);
@@ -126,5 +134,5 @@ export function WireGamePage() {
   };
   const reset = () => { if (wrongTimer.current) window.clearTimeout(wrongTimer.current); setRightColumn(shuffle(pairs)); setConnections([]); setDrag(null); setSelectedLeft(null); setWrongWire(null); setMistakes(0); setTime(0); setStarted(false); };
 
-  return <main className="game-page wire-page" ref={rootRef}><nav className="topnav"><Link to="/">FPT<span>•</span>PHIL</Link><Link to="/game">← Chọn game</Link></nav><header className="game-hero"><p className="eyebrow">Luyện hiểu ý · 06 cặp</p><h1>Nối nguyên lý<br/>với <mark>tình huống.</mark></h1><p>Gợi ý: xem lại mục 02, 03 và 05 ở trang bài học.</p></header><section className="game-board wire-board-shell"><div className="game-stats"><span>Đã nối <b>{connections.length}/{pairs.length}</b></span><span>Nối sai <b>{mistakes}</b></span><span>Thời gian <b>{time}s</b></span></div>{!done ? <div className="wire-board" ref={boardRef}>{connections.map(({ pairId }) => { const from = socketPoint('left', pairId); const to = socketPoint('right', pairId); return from && to ? <svg className="wire-layer" key={pairId} aria-hidden="true"><path className="wire-path wire-path--correct" d={cablePath(from, to)} /></svg> : null; })}<svg className="wire-layer" aria-hidden="true">{drag && <path className="wire-path wire-path--drag" d={cablePath(drag.start, drag.current)} />}{wrongWire && <path className="wire-path wire-preview--wrong" d={cablePath(wrongWire.from, wrongWire.to)} />}</svg><div className="wire-column wire-column--left">{pairs.map((pair) => <button key={pair.id} className={`wire-item wire-item--left ${selectedLeft === pair.id ? 'is-selected' : ''} ${isConnected(pair.id) ? 'is-connected' : ''}`} onPointerDown={(event) => onLeftPointerDown(event, pair.id)} onClick={() => onLeftClick(pair.id)} disabled={isConnected(pair.id)}><span>{pair.concept}</span><span className="wire-socket" ref={(node) => { if (node) leftSockets.current.set(pair.id, node); else leftSockets.current.delete(pair.id); }} /></button>)}</div><div className="wire-column wire-column--right">{rightColumn.map((pair) => <button key={pair.id} data-wire-right={pair.id} className={`wire-item wire-item--right ${isConnected(pair.id) ? 'is-connected' : ''}`} onClick={() => onRightClick(pair.id)} disabled={isConnected(pair.id)}><span className="wire-socket" ref={(node) => { if (node) rightSockets.current.set(pair.id, node); else rightSockets.current.delete(pair.id); }} /><span>{pair.example}</span></button>)}</div></div> : <div className="game-result"><p className="eyebrow">Hoàn thành toàn bộ 06 dây</p><h2>Bạn đã nối được<br/>tư duy với thực tiễn.</h2><p><b>{mistakes}</b> lần nối sai · <b>{time}</b> giây</p><button className="primary-btn" onClick={reset}>Chơi lại ↺</button></div>}</section></main>;
+  return <><main className="game-page wire-page" ref={rootRef}><nav className="topnav"><Link to="/">FPT<span>•</span>PHIL</Link><Link to="/game">← Chọn game</Link></nav><header className="game-hero"><p className="eyebrow">Luyện hiểu ý · 06 cặp</p><h1>Nối nguyên lý<br/>với <mark>tình huống.</mark></h1><p>Gợi ý: xem lại mục 02, 03 và 05 ở trang bài học.</p></header><section className="game-board wire-board-shell"><div className="game-stats"><span>Đã nối <b>{connections.length}/{pairs.length}</b></span><span>Nối sai <b>{mistakes}</b></span><span>Thời gian <b>{time}s</b></span></div>{!done ? <div className="wire-board" ref={boardRef}>{connections.map(({ pairId }) => { const from = socketPoint('left', pairId); const to = socketPoint('right', pairId); return from && to ? <svg className="wire-layer" key={pairId} aria-hidden="true"><path className="wire-path wire-path--correct" d={cablePath(from, to)} /></svg> : null; })}<svg className="wire-layer" aria-hidden="true">{drag && <path className="wire-path wire-path--drag" d={cablePath(drag.start, drag.current)} />}{wrongWire && <path className="wire-path wire-preview--wrong" d={cablePath(wrongWire.from, wrongWire.to)} />}</svg><div className="wire-column wire-column--left">{pairs.map((pair) => <button key={pair.id} className={`wire-item wire-item--left ${selectedLeft === pair.id ? 'is-selected' : ''} ${isConnected(pair.id) ? 'is-connected' : ''}`} onPointerDown={(event) => onLeftPointerDown(event, pair.id)} onClick={() => onLeftClick(pair.id)} disabled={isConnected(pair.id)}><span>{pair.concept}</span><span className="wire-socket" ref={(node) => { if (node) leftSockets.current.set(pair.id, node); else leftSockets.current.delete(pair.id); }} /></button>)}</div><div className="wire-column wire-column--right">{rightColumn.map((pair) => <button key={pair.id} data-wire-right={pair.id} className={`wire-item wire-item--right ${isConnected(pair.id) ? 'is-connected' : ''}`} onClick={() => onRightClick(pair.id)} disabled={isConnected(pair.id)}><span className="wire-socket" ref={(node) => { if (node) rightSockets.current.set(pair.id, node); else rightSockets.current.delete(pair.id); }} /><span>{pair.example}</span></button>)}</div></div> : <div className="game-result"><p className="eyebrow">Hoàn thành toàn bộ 06 dây</p><h2>Bạn đã nối được<br/>tư duy với thực tiễn.</h2><p><b>{mistakes}</b> lần nối sai · <b>{time}</b> giây</p><button className="primary-btn" onClick={reset}>Chơi lại ↺</button></div>}</section></main><CongratsModal open={showCongrats} onClose={() => setShowCongrats(false)} /></>;
 }

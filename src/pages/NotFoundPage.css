@@ -1,0 +1,1 @@
+.not-found-page{min-height:100vh;min-height:100dvh;display:grid;place-items:center;padding:clamp(7rem,12vw,10rem) clamp(1.25rem,10vw,12rem) 4rem;background:var(--deep);color:var(--ink)}.not-found-content{max-width:1020px}.not-found-content h1{margin:1rem 0 2rem;font-size:clamp(3rem,7vw,8rem)}

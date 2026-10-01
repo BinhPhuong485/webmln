@@ -4,8 +4,15 @@ html, body { overflow-x:clip; }
 img, svg, canvas { max-width:100%; }
 :where(a, button, [role='button']):focus-visible { outline:3px solid var(--orange); outline-offset:3px; }
 :where(a, button) { -webkit-tap-highlight-color:color-mix(in srgb, var(--orange) 30%, transparent); }
+.hero { position:relative; }
 .hero-stroke-lines { display:grid; gap:.04em; width:min(100%,840px); line-height:0; }
 .hero-stroke-lines .stroke-text { max-width:100%; }
+.hero-stroke-line + .hero-stroke-line { transform:translateY(-42px); }
+.hero-bottom { position:relative; top:-84px; padding-bottom:clamp(3.75rem,7vw,5.5rem); }
+.scroll-cue { position:absolute; left:50%; bottom:max(42px, env(safe-area-inset-bottom)); display:inline-flex; align-items:center; gap:.8rem; color:var(--ink); font-size:.78rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; white-space:nowrap; opacity:.76; transform:translateX(-50%); }
+.scroll-cue i { width:clamp(1.8rem,4vw,3.5rem); height:1px; background:currentColor; }
+.scroll-cue b { font:1.2rem/1 var(--display); animation:scroll-cue-drift 2.4s ease-in-out infinite; }
+@keyframes scroll-cue-drift { 0%,100% { transform:translateY(0); } 50% { transform:translateY(4px); } }
 
 .hero { min-height:100vh; min-height:100dvh; }
 .game-page { min-height:100vh; min-height:100dvh; padding-bottom:calc(5rem + env(safe-area-inset-bottom)); }
@@ -27,9 +34,9 @@ img, svg, canvas { max-width:100%; }
   .hero { min-height:100vh; min-height:100dvh; justify-content:flex-start; padding:calc(7.5rem + env(safe-area-inset-top)) clamp(1.25rem,6vw,1.75rem) 2.5rem; }
   .hero h1 { width:100%; font-size:clamp(3.65rem,16vw,5.2rem); }
   .hero-stroke-lines { width:100%; }
-  .hero-bottom { flex-direction:column; align-items:flex-start; gap:1.5rem; margin-top:2.25rem; }
+  .hero-bottom { top:-84px; flex-direction:column; align-items:flex-start; gap:1.5rem; margin-top:2.25rem; padding-bottom:4.25rem; }
   .hero-bottom p { font-size:1rem; }
-  .round-btn { width:48px; height:48px; }
+  .scroll-cue { bottom:calc(42px + env(safe-area-inset-bottom)); font-size:.72rem; }
   .section { padding:clamp(3.5rem,12vw,5rem) clamp(1.25rem,6vw,1.75rem); }
   .section-heading { grid-template-columns:1fr; gap:.75rem; }
   .section-heading > span { width:44px; }
@@ -110,4 +117,5 @@ img, svg, canvas { max-width:100%; }
 
 @media (prefers-reduced-motion:reduce) {
   .hero-reveal, .role-card, .experience-card, .definition-theory, .definition-practice, .theory-line, .conclusion-line { opacity:1!important; transform:none!important; }
+  .scroll-cue b { animation:none; }
 }
