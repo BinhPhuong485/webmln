@@ -1,4 +1,7 @@
-import { useId, useState } from 'react';
+import { useId, useRef, useState } from 'react';
+import { useGSAP } from '@gsap/react';
+import { gsap } from 'gsap';
+import { motion } from '../motionTokens';
 import './TheoryPracticeDiagram.css';
 
 const directions = [
@@ -19,24 +22,59 @@ const directions = [
 export function TheoryPracticeDiagram() {
   const [selected, setSelected] = useState<number | null>(null);
   const id = useId();
+  const mapRef = useRef<HTMLDivElement>(null);
+  const practiceToTheoryRef = useRef<SVGGElement>(null);
+  const theoryToPracticeRef = useRef<SVGGElement>(null);
+  const { contextSafe } = useGSAP(() => {
+    const arrows = [practiceToTheoryRef.current, theoryToPracticeRef.current].filter(
+      (arrow): arrow is SVGGElement => arrow !== null,
+    );
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      gsap.set(arrows, { autoAlpha: 0.34, scaleX: 1, xPercent: 0, transformOrigin: '50% 50%' });
+    }
+  }, { scope: mapRef });
+
+  const selectDirection = contextSafe((index: number) => {
+    setSelected(index);
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const arrows = [practiceToTheoryRef.current, theoryToPracticeRef.current].filter(
+      (arrow): arrow is SVGGElement => arrow !== null,
+    );
+    const activeArrow = arrows[index];
+    if (!activeArrow) return;
+
+    const inactiveArrow = arrows.find((arrow) => arrow !== activeArrow);
+    const directionOffset = index === 0 ? -6 : 6;
+    gsap.killTweensOf(arrows);
+    const timeline = gsap.timeline({ defaults: { overwrite: 'auto' } });
+    if (inactiveArrow) {
+      timeline.to(inactiveArrow, { autoAlpha: 0.28, scaleX: 0.97, duration: motion.duration.instant, ease: motion.easing.standard }, 0);
+    }
+    timeline.fromTo(activeArrow,
+      { autoAlpha: 0.32, scaleX: 0.94, xPercent: directionOffset },
+      { autoAlpha: 1, scaleX: 1, xPercent: 0, duration: motion.duration.fast, ease: motion.easing.standard },
+      0,
+    );
+  });
 
   return <section className="tp-diagram" aria-labelledby={`${id}-title`}>
     <p className="tp-kicker">Khám phá mối quan hệ hai chiều</p>
     <h3 id={`${id}-title`}>Lý luận ↔ Thực tiễn</h3>
     <p id={`${id}-hint`} className="tp-hint">Chọn một chiều để khám phá. Bấm hoặc chạm; dùng Tab rồi Enter hoặc phím cách khi thao tác bằng bàn phím.</p>
 
-    <div className="tp-map" aria-hidden="true">
+    <div className="tp-map" ref={mapRef} aria-hidden="true">
       <strong>Thực tiễn</strong>
       <svg viewBox="0 0 300 100" focusable="false">
         <defs><marker id={`${id}-arrow`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke" /></marker></defs>
-        <path className={`tp-path ${selected === 0 ? 'is-active' : ''}`} d="M 15 30 H 280" markerEnd={`url(#${id}-arrow)`} />
-        <path className={`tp-path ${selected === 1 ? 'is-active' : ''}`} d="M 285 70 H 20" markerEnd={`url(#${id}-arrow)`} />
+        <g ref={practiceToTheoryRef} className="tp-arrow"><path className="tp-path" d="M 15 30 H 280" markerEnd={`url(#${id}-arrow)`} /></g>
+        <g ref={theoryToPracticeRef} className="tp-arrow"><path className="tp-path" d="M 285 70 H 20" markerEnd={`url(#${id}-arrow)`} /></g>
       </svg>
       <strong>Lý luận</strong>
     </div>
 
     <div className="tp-controls" role="group" aria-label="Chọn chiều quan hệ" aria-describedby={`${id}-hint`}>
-      {directions.map((direction, index) => <button key={direction.label} type="button" aria-pressed={selected === index} aria-controls={`${id}-detail`} onClick={() => setSelected(index)}>
+      {directions.map((direction, index) => <button key={direction.label} type="button" aria-pressed={selected === index} aria-controls={`${id}-detail`} onClick={() => selectDirection(index)}>
         <span className="tp-choice-mark" aria-hidden="true">{selected === index ? '●' : '○'}</span>{direction.label}
       </button>)}
     </div>

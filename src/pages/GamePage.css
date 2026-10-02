@@ -2,3 +2,17 @@
   border: 2px solid var(--ink);
   border-radius: 4px;
 }
+
+.memory-card--concept .card-back { border-color:var(--orange); background:var(--orange); color:var(--ink); }
+.memory-card--example .card-back { border-color:var(--blue); background:var(--blue); color:var(--paper); }
+.memory-card .card-front.concept,.memory-card .card-front.example { color:var(--ink); -webkit-text-fill-color:var(--ink); }
+.memory-card:disabled { opacity:1; color:inherit; cursor:default; }
+.memory-countdown { margin-top:1rem; color:var(--blue); font-weight:800; }
+.memory-stats { align-items:center; }
+.memory-hint-button { display:inline-flex; min-height:44px; align-items:center; gap:.45rem; margin-left:auto; padding:.35rem 0; border:0; border-bottom:2px solid var(--blue); background:transparent; color:var(--blue); font:800 .75rem/1.2 var(--body); letter-spacing:.06em; text-transform:uppercase; cursor:pointer; transform:translateY(-5px); }
+.memory-hint-button b { display:grid; width:1.65rem; height:1.65rem; place-items:center; border-radius:50%; background:var(--blue); color:var(--paper); font-size:.7rem; letter-spacing:0; }
+.memory-hint-button:disabled { opacity:1; border-color:var(--line); color:#19253288; cursor:not-allowed; }
+.memory-hint-button:disabled b { background:#19253233; color:var(--paper); }
+.memory-hint-button:focus-visible { outline:3px solid var(--orange); outline-offset:3px; }
+@media (hover:hover) { .memory-hint-button:not(:disabled):hover b { transform:scale(1.08); } }
+@media (prefers-reduced-motion:reduce) { .memory-hint-button { transition:none; } }

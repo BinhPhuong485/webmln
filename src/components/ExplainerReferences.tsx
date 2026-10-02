@@ -1,13 +1,45 @@
 import { sources } from '../data/explainerStory';
 
-const aiFields = [
-  ['Công cụ', '[Nhóm cần điền] Tên công cụ, phiên bản/model nếu biết, ngày sử dụng và thành viên sử dụng.'],
-  ['Mục đích', '[Nhóm cần điền] Công đoạn có AI hỗ trợ: gợi ý nội dung, viết mã, tạo hình minh họa, kiểm tra…'],
-  ['Prompt chính', '[Nhóm cần điền] Đính kèm nguyên văn prompt và các yêu cầu chỉnh sửa quan trọng. Không thay bằng một prompt mẫu không thực sự dùng.'],
-  ['Đầu ra', '[Nhóm cần điền] Đoạn nội dung, tệp mã, hình hoặc ý tưởng đã sử dụng; liên kết tới bản lưu có thể đối chiếu.'],
-  ['Phần nhóm tự sửa / biên soạn', '[Nhóm cần điền] Ai đã sửa phần nào, đã loại bỏ hay hiệu chỉnh nội dung gì, và lý do.'],
-  ['Nguồn kiểm chứng', '[Nhóm cần điền] Nguồn đã đọc, trang/mục đã đối chiếu, ngày kiểm tra và kết quả xác minh. Danh sách nguồn ở trên chưa thay thế việc nhóm tự kiểm chứng.'],
-  ['Cam kết liêm chính học thuật', '[Nhóm cần xác nhận trước khi nộp] Công khai phạm vi hỗ trợ của AI, chịu trách nhiệm về nội dung, không trình bày tình huống giả định như dữ liệu thật, và tuân thủ quy định học phần.'],
+type AiField = {
+  label: string;
+  text?: string;
+  placeholder: string;
+};
+
+const aiFields: AiField[] = [
+  {
+    label: 'Công cụ',
+    text: 'Claude (Anthropic), model Claude Sonnet 5, giao diện chat claude.ai, sử dụng qua nhiều phiên trò chuyện trong quá trình làm bài. OpenAI Codex (CLI), model GPT-5.6 Terra Medium, chạy cục bộ trên máy để viết và sửa mã nguồn theo các prompt từ Claude. Thành viên trực tiếp thao tác: Bình Phương.',
+    placeholder: '',
+  },
+  {
+    label: 'Mục đích',
+    text: 'Claude: lên ý tưởng cấu trúc website, thiết kế từng tính năng (các phần lý thuyết, 4 trò chơi, video tóm tắt, chia sẻ/mã QR, hiệu ứng giao diện), soạn prompt kỹ thuật chi tiết để Codex thực thi, rà soát độ chính xác nội dung triết học so với cách trình bày phổ biến của học phần, gợi ý cải thiện trải nghiệm khi trò chơi bị đánh giá là khó, hướng dẫn quy trình dùng Git và triển khai lên Vercel, chẩn đoán và hướng dẫn khắc phục các lỗi hiệu năng/giao diện phát sinh. Codex: trực tiếp viết, sửa và tối ưu mã nguồn React + TypeScript theo các prompt đã được xác nhận trước khi gửi.',
+    placeholder: '',
+  },
+  {
+    label: 'Prompt chính',
+    placeholder: '[Nhóm cần điền] Đính kèm nguyên văn prompt và các yêu cầu chỉnh sửa quan trọng. Không thay bằng một prompt mẫu không thực sự dùng.',
+  },
+  {
+    label: 'Đầu ra',
+    text: 'Mã nguồn các phần: trang lý thuyết, 4 trò chơi, thẻ tương tác 3D, hệ thống chia sẻ và mã QR, video tóm tắt, trang này (Phụ lục AI Usage). Repo GitHub: https://github.com/BinhPhuong485/webmln.git. Bản deploy Vercel: https://webmln-tawny.vercel.app/.',
+    placeholder: '',
+  },
+  {
+    label: 'Phần nhóm tự sửa / biên soạn',
+    placeholder: '[Nhóm cần điền] Ai đã sửa phần nào, đã loại bỏ hay hiệu chỉnh nội dung gì, và lý do.',
+  },
+  {
+    label: 'Nguồn kiểm chứng',
+    text: 'Giáo trình Triết học Mác – Lênin, Bộ Giáo dục và Đào tạo — nội dung lý luận và thực tiễn trong các phần lý thuyết của trang được rà soát dựa trên cách trình bày phổ biến của học phần này. Riêng các ví dụ liên hệ tại Đại học FPT, một số nguồn công khai đã được đối chiếu (như thông báo OJT của trường, xem mục nguồn ở trên); các ví dụ khác (như hoạt động khởi nghiệp, dự án nhóm) mang tính minh hoạ, chưa được xác minh là hoạt động chính thức áp dụng cho mọi ngành/khoá.',
+    placeholder: '[Nhóm cần điền: tên giáo trình/slide cụ thể của lớp đã dùng để đối chiếu, trang/mục đã xem, ngày kiểm tra]',
+  },
+  {
+    label: 'Cam kết liêm chính học thuật',
+    text: 'Nhóm công khai phạm vi hỗ trợ của AI như mô tả ở các mục trên, chịu trách nhiệm về toàn bộ nội dung cuối cùng của bài làm, không trình bày các ví dụ minh hoạ hoặc tình huống giả định như dữ liệu đã được xác minh chính thức, và tuân thủ quy định của học phần về việc sử dụng AI trong bài làm.',
+    placeholder: '[Nhóm cần xác nhận trước khi nộp]',
+  },
 ];
 
 export function ExplainerReferences() {
@@ -22,8 +54,7 @@ export function ExplainerReferences() {
     </ol>
     <p className="story-note">Nguồn FPT được truy cập ngày 29/09/2026. Vòng học tập, tình huống đặt phòng và SVG là phần minh họa được biên soạn cho website, không trích nguyên văn giáo trình và không phải tư liệu thực địa.</p>
     <details className="ai-usage" id="ai-usage"><summary>Phụ lục AI Usage <span>Nhóm cần hoàn thiện trước khi nộp</span></summary><div>
-      <p>Đây là khung kê khai, chưa phải lời xác nhận về quá trình làm việc của nhóm. Điền các mục dưới đây bằng lịch sử sử dụng thực tế.</p>
-      <dl>{aiFields.map(([label, text]) => <div key={label}><dt>{label}</dt><dd>{text}</dd></div>)}</dl>
+      <dl>{aiFields.map(({ label, text, placeholder }) => <div key={label}><dt>{label}</dt><dd>{text}{text && placeholder ? ' ' : null}{placeholder && <span className="ai-placeholder">{placeholder}</span>}</dd></div>)}</dl>
     </div></details>
   </section>;
 }

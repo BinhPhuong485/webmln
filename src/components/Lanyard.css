@@ -10,6 +10,27 @@
   align-items: center;
   transform: scale(1);
   transform-origin: center;
+  margin-left: 42px;
+}
+
+.lanyard-handoff .lanyard-wrapper { will-change: transform, opacity; }
+
+.topnav-game-link {
+  position: relative;
+  justify-content: center;
+  gap: .38rem;
+  padding-bottom: .5rem;
+}
+
+.topnav-game-link::after {
+  position: absolute;
+  right: 0;
+  bottom: .08rem;
+  left: 0;
+  height: 2px;
+  background: var(--orange);
+  content: '';
+  pointer-events: none;
 }
 
 @media (max-width: 768px) {

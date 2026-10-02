@@ -1,1 +1,16 @@
-.click-spark{position:relative;width:100%;min-height:100%}.click-spark__canvas{position:absolute;z-index:30;inset:0;display:block;pointer-events:none;user-select:none}@media(prefers-reduced-motion:reduce){.click-spark__canvas{display:none}}
+.click-spark { min-height: 100%; }
+
+.click-spark__canvas {
+  position: fixed;
+  z-index: 12;
+  inset: 0;
+  display: block;
+  width: 100vw;
+  height: 100dvh;
+  pointer-events: none;
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .click-spark__canvas { display: none; }
+}

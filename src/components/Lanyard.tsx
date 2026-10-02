@@ -124,6 +124,15 @@ function Band({ onYank, threshold }) {
     curve.current.points[0].copy(c.current.translation()); curve.current.points[1].copy(b.current.translation()); curve.current.points[2].copy(a.current.translation()); curve.current.points[3].copy(fixed.current.translation()); line.current.geometry.setPoints(curve.current.getPoints(20));
   });
   const down = (event) => { event.target.setPointerCapture(event.pointerId); off.current.copy(event.point).sub(card.current.translation()); pull.current = 0; setDrag(true); };
-  const up = (event) => { event.target.releasePointerCapture(event.pointerId); setDrag(false); if (pull.current >= threshold) onYank?.(); };
+  const up = (event) => {
+    event.target.releasePointerCapture(event.pointerId);
+    if (pull.current >= threshold && onYank) {
+      // Keep the card kinematic during the brief hand-off to the next route.
+      // Switching Rapier body mode here was the visible release hitch.
+      onYank();
+      return;
+    }
+    setDrag(false);
+  };
   return <><group position={[0, 4, 0]}><RigidBody ref={fixed} {...p} type="fixed" /><RigidBody ref={a} position={[0.5, 0, 0]} {...p}><BallCollider args={[0.1]} /></RigidBody><RigidBody ref={b} position={[1, 0, 0]} {...p}><BallCollider args={[0.1]} /></RigidBody><RigidBody ref={c} position={[1.5, 0, 0]} {...p}><BallCollider args={[0.1]} /></RigidBody><RigidBody ref={card} position={[2, 0, 0]} {...p} type={drag ? 'kinematicPosition' : 'dynamic'}><CuboidCollider args={[0.8, 1.125, 0.01]} /><group scale={2.25} position={[0, -1.2, -0.05]} onPointerDown={down} onPointerUp={up}><mesh geometry={nodes.card.geometry}><meshPhysicalMaterial map={cardMap} roughness={0.65} metalness={0.25} /></mesh><mesh geometry={nodes.clip.geometry} material={materials.metal} /><mesh geometry={nodes.clamp.geometry} material={materials.metal} /></group></RigidBody></group><mesh ref={line}><meshLineGeometry /><meshLineMaterial color="#ec6a31" depthTest={false} resolution={[1000, 1000]} useMap map={rope} repeat={[-4, 1]} lineWidth={1} /></mesh></>;
 }

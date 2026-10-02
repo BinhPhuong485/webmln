@@ -12,6 +12,7 @@ import { FptExperiences } from '../components/FptExperiences';
 import { ProjectCaseStudy } from '../components/ProjectCaseStudy';
 import { DecisionReflection } from '../components/DecisionReflection';
 import { ExplainerReferences } from '../components/ExplainerReferences';
+import { RoleExample } from '../components/RoleExample';
 import { guidingQuestion, practiceRoles, sources } from '../data/explainerStory';
 import { useHeroEntrance, useProgressScroll, useSection01Scroll, useSection02Scroll, useSection03Scroll, useSection04Scroll, useSection05Scroll, useSection06Scroll, useSectionNumberParallax } from '../hooks/useExplainerScroll';
 import './ExplainerScroll.css';
@@ -79,7 +80,7 @@ export function ExplainerPage() {
 
     <section className="section practice-section" id="practice" tabIndex={-1}>
       <div><Heading number="02" label="Từ đời sống đến tư duy">Thực tiễn<br />không đứng sau lý luận.</Heading><p className="section-lead">Thực tiễn là cơ sở, động lực, mục đích của nhận thức và tiêu chuẩn của chân lý.</p><p className="story-note">Ví dụ học tập dưới đây tiếp tục tình huống giả định về đồ án đặt phòng.</p></div>
-      <div className="role-orbit">{practiceRoles.map((role, index) => <article className="role-card" key={role.title}><span>0{index + 1}</span><h3>{role.title}</h3><p>{role.text}</p><details className="role-example"><summary>Xem ví dụ học tập</summary><p>{role.example}</p></details></article>)}</div>
+      <div className="role-orbit">{practiceRoles.map((role, index) => <article className="role-card" key={role.title}><span>0{index + 1}</span><h3>{role.title}</h3><p>{role.text}</p><RoleExample>{role.example}</RoleExample></article>)}</div>
       <p className="story-caution">Một phép thử sản phẩm chỉ kiểm tra giả định trong điều kiện cụ thể; nó không chứng minh mọi kết luận về giáo dục hay chất lượng đào tạo của FPT.</p>
       <p className="story-transition">Từ thực tiễn, ta phát triển hiểu biết. Hiểu biết ấy quay lại hướng dẫn hành động như thế nào? <a href="#learning">Đến chặng 03 →</a></p>
     </section>

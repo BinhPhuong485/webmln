@@ -5,8 +5,8 @@
 .tp-map { display:grid; grid-template-columns:auto minmax(70px,1fr) auto; align-items:center; gap:clamp(.6rem,2vw,2rem); margin:2rem 0; }
 .tp-map strong { border:2px solid var(--blue); padding:clamp(.65rem,2vw,1.5rem); font:700 clamp(1.1rem,2.8vw,2.5rem)/1.2 var(--display); white-space:nowrap; }
 .tp-map svg { width:100%; max-height:110px; overflow:visible; }
-.tp-path { fill:none; stroke:var(--blue); stroke-width:2; opacity:.3; stroke-dasharray:7 6; transition:opacity 180ms ease,stroke-width 180ms ease; }
-.tp-path.is-active { opacity:1; stroke-width:5; stroke-dasharray:none; }
+.tp-arrow { transform-box:fill-box; transform-origin:center; will-change:transform,opacity; }
+.tp-path { fill:none; stroke:var(--blue); stroke-width:4; stroke-dasharray:7 6; }
 .tp-controls { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.8rem; }
 .tp-controls button { min-height:56px; padding:1rem; border:2px solid var(--blue); background:transparent; color:var(--blue); font:700 clamp(1rem,1.5vw,1.25rem)/1.5 var(--body); cursor:pointer; touch-action:manipulation; transition:background 180ms ease,color 180ms ease; }
 .tp-controls button[aria-pressed='true'] { background:var(--blue); color:var(--paper); }
