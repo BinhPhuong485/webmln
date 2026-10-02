@@ -15,7 +15,25 @@ export function useHeroEntrance(root: RootRef) {
 }
 
 export function useProgressScroll(root: RootRef, bar: RefObject<HTMLSpanElement | null>) {
-  useGSAP(() => { if (bar.current && !prefersReducedMotion()) gsap.to(bar.current, { scaleX: 1, transformOrigin: 'left', ease: 'none', scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom bottom', scrub: 0.25 } }); }, { scope: root });
+  useGSAP(() => {
+    const page = root.current;
+    const nav = page?.querySelector<HTMLElement>('.topnav');
+    const updateNavHeight = () => page?.style.setProperty('--story-nav-height', `${nav?.offsetHeight ?? 0}px`);
+    const observer = nav ? new ResizeObserver(updateNavHeight) : null;
+    if (nav) observer?.observe(nav);
+    updateNavHeight();
+
+    if (bar.current && prefersReducedMotion()) {
+      ScrollTrigger.create({ trigger: root.current, start: 'top top', end: 'bottom bottom', onUpdate: (self) => gsap.set(bar.current, { scaleX: self.progress, transformOrigin: 'left' }) });
+    } else if (bar.current) {
+      gsap.to(bar.current, { scaleX: 1, transformOrigin: 'left', ease: 'none', scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom bottom', scrub: 0.25 } });
+    }
+
+    return () => {
+      observer?.disconnect();
+      page?.style.removeProperty('--story-nav-height');
+    };
+  }, { scope: root });
 }
 
 export function useSectionNumberParallax(root: RootRef) {

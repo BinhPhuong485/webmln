@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ShareQrNav } from './components/ShareQrNav';
 import { GameResultBackLink } from './components/GameResultBackLink';
 import { ScrollToTopButton } from './components/ScrollToTopButton';
+import { RouteScrollReset } from './components/RouteScrollReset';
 import ClickSpark from './components/ClickSpark';
 
 const ExplainerPage = lazy(() => import('./pages/ExplainerPage').then((module) => ({ default: module.ExplainerPage })));
@@ -14,5 +15,5 @@ const TeamLeadGamePage = lazy(() => import('./pages/TeamLeadGamePage').then((mod
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage').then((module) => ({ default: module.NotFoundPage })));
 
 export default function App() {
-  return <ClickSpark sparkColor="#ec6a31" sparkSize={9} sparkRadius={18} sparkCount={8} duration={400}><BrowserRouter><Suspense fallback={null}><Routes><Route path="/" element={<ExplainerPage />} /><Route path="/game" element={<GamePage />} /><Route path="/game/ghep-the" element={<MemoryGamePage />} /><Route path="/game/noi-day" element={<WireGamePage />} /><Route path="/game/vong-nhan-thuc" element={<CycleGamePage />} /><Route path="/game/truong-nhom" element={<TeamLeadGamePage />} /><Route path="*" element={<NotFoundPage />} /></Routes><ShareQrNav /><GameResultBackLink /><ScrollToTopButton /></Suspense></BrowserRouter></ClickSpark>;
+  return <ClickSpark sparkColor="#ec6a31" sparkSize={9} sparkRadius={18} sparkCount={5} duration={400}><BrowserRouter><RouteScrollReset /><Suspense fallback={null}><Routes><Route path="/" element={<ExplainerPage />} /><Route path="/game" element={<GamePage />} /><Route path="/game/ghep-the" element={<MemoryGamePage />} /><Route path="/game/noi-day" element={<WireGamePage />} /><Route path="/game/vong-nhan-thuc" element={<CycleGamePage />} /><Route path="/game/truong-nhom" element={<TeamLeadGamePage />} /><Route path="*" element={<NotFoundPage />} /></Routes><ShareQrNav /><GameResultBackLink /><ScrollToTopButton /></Suspense></BrowserRouter></ClickSpark>;
 }
