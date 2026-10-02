@@ -9,6 +9,7 @@ export const chapters = [
   { id: 'case-study', label: 'Theo dấu đồ án' },
   { id: 'pitfalls', label: '05 · Hai lối rẽ' },
   { id: 'conclusion', label: '06 · Kết luận' },
+  { id: 'video-summary', label: '07 · Video' },
   { id: 'references', label: 'Nguồn & AI Usage' },
 ] as const;
 

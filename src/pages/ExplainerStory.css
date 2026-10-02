@@ -10,12 +10,12 @@
 .story-skip { position:fixed; z-index:30; top:10px; left:15px; padding:1rem; background:var(--ink); color:var(--paper); transform:translateY(-160%); }
 .story-skip:focus { transform:none; }
 .story-kicker { font-size:.8rem; line-height:1.5; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--blue); }
-.story-hero { padding-top:clamp(9rem,18vh,13rem); }
+.story-hero { padding-top:clamp(9rem,18vh,13rem); padding-bottom:7rem; }
 .story-hero > .eyebrow { max-width:75ch; margin-bottom:1.5rem; }
 .story-opening { max-width:780px; margin-top:2.5rem; padding-left:1.4rem; border-left:3px solid var(--orange); }
 .story-opening > p + p { margin-top:.7rem; }
 .story-opening-question { font-weight:700; }
-.story-hero .hero-bottom { max-width:900px; margin-top:2rem; align-items:center; }
+.story-hero .hero-bottom { max-width:900px; margin-top:2rem; align-items:center; top:auto; padding-bottom:0; }
 .story-hero .hero-bottom p { max-width:70ch; }
 .story-hero .hero-bottom .story-kicker { margin-bottom:.5rem; }
 .story-hero .round-btn { flex-shrink:0; }

@@ -80,9 +80,9 @@ export function useSection05Scroll(root: RootRef) {
 export function useSection06Scroll(root: RootRef) {
   useGSAP(() => {
     if (prefersReducedMotion()) return;
-    const query = gsap.utils.selector(root); const section = query<HTMLElement>('.conclusion')[0]; const lines = query<HTMLElement>('.conclusion-line'); const statement = query<HTMLElement>('.conclusion-statement')[0]; const button = query<HTMLElement>('.conclusion .primary-btn')[0];
-    if (!section || !lines.length || !statement || !button) return;
+    const query = gsap.utils.selector(root); const section = query<HTMLElement>('.conclusion')[0]; const lines = query<HTMLElement>('.conclusion-line'); const statement = query<HTMLElement>('.conclusion-statement')[0];
+    if (!section || !lines.length || !statement) return;
     const timeline = gsap.timeline({ scrollTrigger: { trigger: section, start: 'top 72%', once: true } });
-    timeline.from(lines, { autoAlpha: 0, y: 22, duration: motion.duration.base, stagger: 0.16, ease: motion.easing.standard }).from(statement, { autoAlpha: 0, y: 14, scale: 0.97, duration: motion.duration.slow, ease: motion.easing.enter }, '>-0.1').from(button, { autoAlpha: 0, scale: 0.92, duration: motion.duration.base, ease: motion.easing.enter }, '+=0.12');
+    timeline.from(lines, { autoAlpha: 0, y: 22, duration: motion.duration.base, stagger: 0.16, ease: motion.easing.standard }).from(statement, { autoAlpha: 0, y: 14, scale: 0.97, duration: motion.duration.slow, ease: motion.easing.enter }, '>-0.1');
   }, { scope: root });
 }

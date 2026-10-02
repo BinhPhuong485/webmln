@@ -1,6 +1,9 @@
 # Dependencies
 node_modules/
 
+# Source media kept locally; only processed files in public/videos are tracked.
+assets-source/
+
 # Production output
 dist/
 

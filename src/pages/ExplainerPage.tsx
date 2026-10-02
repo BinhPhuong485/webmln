@@ -2,6 +2,9 @@ import { useEffect, useRef, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { YankLanyard } from '../components/YankLanyard';
+import { VideoSection } from '../components/VideoSection';
+import { ArrowUpRightIcon } from '../components/ArrowUpRightIcon';
+import { HeroStrokeText } from '../components/HeroStrokeText';
 import { TheoryPracticeDiagram } from '../components/TheoryPracticeDiagram';
 import { StoryNavigation } from '../components/StoryNavigation';
 import { LearningCycle } from '../components/LearningCycle';
@@ -49,16 +52,16 @@ export function ExplainerPage() {
   return <main className="site story-site" ref={root}>
     <a className="story-skip" href="#concepts">Bỏ qua mở đầu, đến bài học</a>
     <div className="reading"><span ref={bar} /></div>
-    <nav className="topnav"><Link to="/">FPT<span>•</span>PHIL</Link><Link to="/game">Chơi game ↗</Link></nav>
+    <nav className="topnav"><Link to="/">FPT<span>•</span>PHIL</Link><Link to="/game">Chơi game <ArrowUpRightIcon /></Link></nav>
     <section className="hero story-hero" id="opening" tabIndex={-1}>
       <p className="eyebrow hero-reveal">MLN111 · Thống nhất giữa lý luận và thực tiễn trong đào tạo bậc Đại học tại FPT</p>
-      <h1 className="hero-reveal">Khi tư duy<br />gặp <mark>đời sống.</mark></h1>
+      <h1 className="hero-reveal"><HeroStrokeText /></h1>
       <div className="story-opening hero-reveal">
         <p className="story-kicker">Tình huống giả định để minh họa</p>
         <p>Nhóm sinh viên FPT lên kế hoạch làm ứng dụng đặt phòng học nhóm. Bản thử trông ổn — cho đến khi hai người dùng cùng đặt một phòng và đều nhận thông báo thành công.</p>
         <p className="story-opening-question">Vậy nhóm cần sửa sản phẩm, hay còn cần xem lại cách hiểu của mình?</p>
       </div>
-      <div className="hero-bottom hero-reveal"><div><p className="story-kicker">Câu hỏi xuyên suốt</p><p>{guidingQuestion}</p></div><a className="round-btn" href="#concepts" aria-label="Bắt đầu tìm hiểu lý luận và thực tiễn">↓</a></div>
+      <div className="hero-bottom hero-reveal"><div><p className="story-kicker">Câu hỏi xuyên suốt</p><p>{guidingQuestion}</p></div></div><a className="scroll-cue" href="#concepts"><i aria-hidden="true" />Cuộn để khám phá<b aria-hidden="true">↓</b><i aria-hidden="true" /></a>
     </section>
 
     <StoryNavigation />
@@ -111,8 +114,10 @@ export function ExplainerPage() {
 
     <section className="section conclusion" id="conclusion" tabIndex={-1}>
       <Heading number="06" label="Trả lời câu hỏi đầu trang">Biết nghĩ.<br />Biết làm.<br />Biết học từ điều đã làm.</Heading>
-      <div><p className="story-conclusion-question">{guidingQuestion}</p><p className="conclusion-copy"><span className="conclusion-line">Sinh viên biến kiến thức thành năng lực bằng cách dùng lý luận để xác định mục tiêu, chọn phương pháp và tiêu chí giải quyết vấn đề;</span><span className="conclusion-line"> vận dụng trong đồ án hoặc công việc, đối chiếu kết quả và phản hồi với dự kiến;</span><span className="conclusion-line"> rồi tổng kết, điều chỉnh cách hiểu, cách làm và tiếp tục vận dụng.</span></p><strong className="conclusion-statement">Lý luận hướng dẫn hành động; thực tiễn cho cơ hội vận dụng, kiểm nghiệm và phát triển hiểu biết.</strong><p className="story-conclusion-note">Đó là cách vận dụng nguyên tắc, không phải lời khẳng định rằng mọi trải nghiệm tự động tạo ra năng lực. Phản tư và tổng kết có căn cứ là phần không thể bỏ qua.</p><Link className="primary-btn" to="/game">Tự vận dụng qua 04 trò chơi ↗</Link><a className="story-link" href="#references">Xem nguồn & phụ lục AI Usage ↓</a></div>
+      <div><p className="story-conclusion-question">{guidingQuestion}</p><p className="conclusion-copy"><span className="conclusion-line">Sinh viên biến kiến thức thành năng lực bằng cách dùng lý luận để xác định mục tiêu, chọn phương pháp và tiêu chí giải quyết vấn đề;</span><span className="conclusion-line"> vận dụng trong đồ án hoặc công việc, đối chiếu kết quả và phản hồi với dự kiến;</span><span className="conclusion-line"> rồi tổng kết, điều chỉnh cách hiểu, cách làm và tiếp tục vận dụng.</span></p><strong className="conclusion-statement">Lý luận hướng dẫn hành động; thực tiễn cho cơ hội vận dụng, kiểm nghiệm và phát triển hiểu biết.</strong><p className="story-conclusion-note">Đó là cách vận dụng nguyên tắc, không phải lời khẳng định rằng mọi trải nghiệm tự động tạo ra năng lực. Phản tư và tổng kết có căn cứ là phần không thể bỏ qua.</p><a className="story-link" href="#references">Xem nguồn & phụ lục AI Usage ↓</a></div>
     </section>
+    <div id="video-summary" tabIndex={-1}><VideoSection /></div>
+    <section className="game-navigation"><Link className="primary-btn" to="/game">Tự vận dụng qua 04 trò chơi <ArrowUpRightIcon /></Link></section>
     <ExplainerReferences />
     <footer>Triết học Mác – Lênin <span>Bài thuyết trình MLN111 · 2026</span><a href="#references">Nguồn & AI Usage ↑</a></footer>
   </main>;
