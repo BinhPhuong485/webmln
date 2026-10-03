@@ -48,7 +48,7 @@ export function ExplainerReferences() {
       <li><a href={sources.ojt.url}>{sources.ojt.title} ↗</a><p>Dùng để xác nhận cách gọi học kỳ tại doanh nghiệp và hoạt động hướng dẫn OJT. Điều kiện cụ thể cần xem thông báo theo ngành, cơ sở và học kỳ.</p></li>
     </ol>
     <p className="story-note">Nguồn FPT được truy cập ngày 29/09/2026. Vòng học tập, tình huống đặt phòng và SVG là phần minh họa được biên soạn cho website, không trích nguyên văn giáo trình và không phải tư liệu thực địa.</p>
-    <details className="ai-usage" id="ai-usage"><summary>Phụ lục AI Usage <span>Nhóm cần hoàn thiện trước khi nộp</span></summary><div>
+    <details className="ai-usage" id="ai-usage"><summary>Phụ lục AI Usage</summary><div>
       <dl>{aiFields.map(({ label, text, placeholder, links }) => <div key={label}><dt>{label}</dt><dd>{text}{text && placeholder ? ' ' : null}{placeholder && <span className="ai-placeholder">{placeholder}</span>}
         {links && <div className="ai-output-links">{links.map((link) => <a key={link.href} href={link.href} target="_blank" rel="noreferrer"><span>{link.label}</span><b aria-hidden="true">↗</b></a>)}</div>}
       </dd></div>)}</dl>

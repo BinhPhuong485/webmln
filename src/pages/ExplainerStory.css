@@ -121,7 +121,6 @@
 .reference-list p { margin-top:.5rem; }
 .ai-usage { margin-top:2rem; border:1px solid var(--blue); }
 .ai-usage summary { padding:1.25rem; font-weight:800; cursor:pointer; min-height:52px; }
-.ai-usage summary span { font-weight:400; font-size:.9rem; display:block; margin-top:.4rem; }
 .ai-usage > div { padding:0 1.25rem 1.25rem; }
 .ai-usage dl { margin:1.5rem 0 0; }
 .ai-usage dl > div { padding:1rem 0; border-top:1px solid var(--line); }
