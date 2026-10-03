@@ -8,7 +8,6 @@ import revision from '../assets/story/case-revision.svg';
 
 // Replace paths, alt text and captions together when the group supplies real material.
 // Original SVG artwork authored for this project; no external/stock assets.
-export const placeholderCaption = 'Hình minh họa — sẽ thay bằng tư liệu của nhóm';
 export const storyAssets = {
   project: { src: project, alt: 'Bảng công việc và ba thành viên cùng phát triển đồ án', caption: 'Đồ án nhóm: biến yêu cầu thành sản phẩm.' },
   ojt: { src: ojt, alt: 'Máy tính kết nối với môi trường làm việc tại doanh nghiệp', caption: 'OJT: vận dụng kiến thức trong bối cảnh công việc.' },

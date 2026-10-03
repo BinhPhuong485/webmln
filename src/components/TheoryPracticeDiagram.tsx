@@ -92,7 +92,6 @@ export function TheoryPracticeDiagram() {
         <p>{direction.explanation}</p>
         <p className="tp-example-label">Tình huống giả định để minh họa · Đồ án đặt phòng học nhóm</p>
         <p>{direction.example}</p>
-        <p className="tp-disclaimer">Ví dụ giả định, không phải dữ kiện hay kết quả khảo sát thực tế của FPT.</p>
       </div>)}
     </div>
     <a className="story-link" href="#case-study">Theo dõi đầy đủ 5 mốc của đồ án →</a>

@@ -27,7 +27,6 @@ export function FptExperiences() {
       </div>
       <div id={`${id}-${item.key}`} className={`experience-expansion ${open === index ? 'is-open' : ''}`} aria-hidden={open !== index} inert={open !== index}>
         <div><div className="experience-detail">
-          <p className="story-note">Chuỗi học → làm → phản hồi dưới đây là cách phân tích minh họa, không phải báo cáo kết quả của sinh viên FPT.</p>
           <ol>{item.steps.map(([label, text]) => <li key={label}><strong>{label}</strong><p>{text}</p></li>)}</ol>
           {item.key === 'ojt' && <p className="story-source">Thông tin chương trình: FPT gọi OJT là học kỳ tại doanh nghiệp. <a href={sources.ojt.url}>Xem thông báo chính thức ↗</a></p>}
           <button className="story-text-button" type="button" onClick={() => { setOpen(null); buttons.current[index]?.focus(); }}>Đóng chi tiết {item.title} ↑</button>
