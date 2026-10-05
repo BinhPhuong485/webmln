@@ -14,15 +14,15 @@ Website học tập tương tác cho chủ đề **"Thống nhất giữa lý lu
 
 ## Routes
 
-| Route | Trang | Mô tả |
-| --- | --- | --- |
-| `/` | Bài học | Trang giải thích gồm phần mở đầu, 6 chặng nội dung, video tóm tắt, nguồn tham khảo và phụ lục AI Usage. |
-| `/game` | Chọn trò chơi | Hiển thị 4 trò chơi cùng tiến độ hoàn thành lưu trên trình duyệt. |
-| `/game/ghep-the` | Ghép thẻ | Lật thẻ để ghép 6 khái niệm với 6 tình huống tương ứng. Có lượt gợi ý và giai đoạn ghi nhớ trước khi chơi. |
-| `/game/noi-day` | Nối dây | Nối khái niệm với tình huống bằng kéo-thả hoặc chọn lần lượt hai đầu nối. |
-| `/game/vong-nhan-thuc` | Vòng nhận thức | Xếp 4 giai đoạn nhận thức theo đúng thứ tự, qua 2 vòng: tên giai đoạn và ví dụ. |
-| `/game/truong-nhom` | Trưởng nhóm đồ án | Chọn cách xử lý cho 5 tình huống và xem sự cân bằng giữa lý luận suông, thực tiễn mù quáng và sự thống nhất. |
-| `*` | 404 | Trang báo đường dẫn không tồn tại và liên kết quay về bài học. |
+| Route                  | Trang             | Mô tả                                                                                                        |
+| ---------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------ |
+| `/`                    | Bài học           | Trang giải thích gồm phần mở đầu, 6 chặng nội dung, video tóm tắt, nguồn tham khảo và phụ lục AI Usage.      |
+| `/game`                | Chọn trò chơi     | Hiển thị 4 trò chơi cùng tiến độ hoàn thành lưu trên trình duyệt.                                            |
+| `/game/ghep-the`       | Ghép thẻ          | Lật thẻ để ghép 6 khái niệm với 6 tình huống tương ứng. Có lượt gợi ý và giai đoạn ghi nhớ trước khi chơi.   |
+| `/game/noi-day`        | Nối dây           | Nối khái niệm với tình huống bằng kéo-thả hoặc chọn lần lượt hai đầu nối.                                    |
+| `/game/vong-nhan-thuc` | Vòng nhận thức    | Xếp 4 giai đoạn nhận thức theo đúng thứ tự, qua 2 vòng: tên giai đoạn và ví dụ.                              |
+| `/game/truong-nhom`    | Trưởng nhóm đồ án | Chọn cách xử lý cho 5 tình huống và xem sự cân bằng giữa lý luận suông, thực tiễn mù quáng và sự thống nhất. |
+| `*`                    | 404               | Trang báo đường dẫn không tồn tại và liên kết quay về bài học.                                               |
 
 ## Tính năng chính
 
@@ -47,7 +47,7 @@ npm install
 Tạo file `.env` ở thư mục gốc nếu cần liên kết chia sẻ/mã QR trỏ đến URL deploy:
 
 ```env
-VITE_SITE_URL=https://webmln-tawny.vercel.app
+VITE_SITE_URL=https://whenthoughtmeetslife.vercel.app/
 ```
 
 `VITE_SITE_URL` là biến môi trường duy nhất hiện được đọc trong code. Nếu không tạo `.env`, ứng dụng dùng `window.location.origin`; cách này vẫn dùng được ở local nhưng mã QR local không mở được trên thiết bị khác.
@@ -73,10 +73,10 @@ npm run build
 npm run preview
 ```
 
-Dự án đang được deploy trên Vercel: <https://webmln-tawny.vercel.app/>.
+Dự án đang được deploy trên Vercel: <https://whenthoughtmeetslife.vercel.app/>.
 
 File `vercel.json` cấu hình rewrite mọi đường dẫn về `index.html`. Đây là yêu cầu cần thiết để các route phía client như `/game/noi-day` vẫn hoạt động khi người dùng tải lại trang hoặc mở trực tiếp URL trên Vercel.
 
 ## Sử dụng AI trong quá trình làm bài
 
-Xem phần kê khai chi tiết ngay trong website tại [Phụ lục AI Usage](https://webmln-tawny.vercel.app/#ai-usage).
+Xem phần kê khai chi tiết ngay trong website tại [Phụ lục AI Usage](https://whenthoughtmeetslife.vercel.app/#references).
