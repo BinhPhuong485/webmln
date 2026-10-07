@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+      <path d="M 42 0 L 0 0 0 42" fill="none" stroke="#192532" stroke-opacity="0.075" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="paperShade" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#f5f1e9"/>
+      <stop offset="1" stop-color="#e8e2d5"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#paperShade)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <path d="M 86 144 H 1114" stroke="#192532" stroke-opacity="0.16" stroke-width="1"/>
+
+  <text x="86" y="106" fill="#ec6a31" font-family="Be Vietnam Pro, Arial, sans-serif" font-size="22" font-weight="800" letter-spacing="3.3">TRIẾT HỌC MÁC – LÊNIN · ĐẠI HỌC FPT</text>
+
+  <text x="86" y="271" fill="#192532" font-family="Playfair Display, Georgia, serif" font-size="108" font-weight="700" letter-spacing="-4">Khi tư duy</text>
+  <text x="86" y="390" fill="#ec6a31" font-family="Playfair Display, Georgia, serif" font-size="108" font-weight="700" letter-spacing="-4">gặp đời sống.</text>
+  <text x="90" y="462" fill="#192532" font-family="Be Vietnam Pro, Arial, sans-serif" font-size="27" font-weight="600">Sự thống nhất giữa lý luận và thực tiễn — Khám phá, học và chơi.</text>
+
+  <g transform="translate(954 216)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="80" cy="84" r="75" stroke="#1b4b64" stroke-width="3" opacity="0.9"/>
+    <circle cx="155" cy="144" r="75" stroke="#ec6a31" stroke-width="3" opacity="0.95"/>
+    <path d="M 94 73 C 120 48, 153 49, 178 74" stroke="#192532" stroke-width="3"/>
+    <path d="M 169 64 L 181 75 166 84" stroke="#192532" stroke-width="3"/>
+    <path d="M 143 158 C 117 183, 84 182, 59 157" stroke="#192532" stroke-width="3"/>
+    <path d="M 68 167 L 56 156 70 147" stroke="#192532" stroke-width="3"/>
+    <circle cx="80" cy="84" r="7" fill="#1b4b64" stroke="none"/>
+    <circle cx="155" cy="144" r="7" fill="#ec6a31" stroke="none"/>
+  </g>
+
+  <path d="M 86 548 H 238" stroke="#ec6a31" stroke-width="4"/>
+  <text x="86" y="584" fill="#ec6a31" font-family="Be Vietnam Pro, Arial, sans-serif" font-size="22" font-weight="800" letter-spacing="2.8">FPT • PHIL</text>
+</svg>
